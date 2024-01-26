@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Info Form</title>
+</head>
+<body>
+
+    <h1>Driver Information Form</h1>
+
+    <form id="driverForm">
+        <label for="driverInfo">Enter Driver Info (Truck Trailer Driver Firstname Lastname Phone):</label>
+        <input type="text" id="driverInfo" name="driverInfo" required>
+
+        <button type="button" onclick="formatDriverInfo()">Submit</button>
+        <button type="button" onclick="clearForm()">Reset</button>
+    </form>
+
+    <h2>Formatted Driver Info:</h2>
+    <pre id="formattedInfo"></pre>
+
+    <button type="button" onclick="copyToClipboard()">Copy</button>
+
+    <script>
+        function formatDriverInfo() {
+            const driverInfo = document.getElementById("driverInfo").value.split(/\s+/);
+            
+            if (driverInfo.length >= 5) {
+                const [truckNumber, trailerNumber, driverFirstName, driverLastName, phoneNumber] = driverInfo;
+                const formattedInfo = `*** DRIVER'S INFO ***\n\nTruck: ${truckNumber}\nTrailer: ${trailerNumber}\nDriver: ${driverFirstName} ${driverLastName}\nPhone: ${phoneNumber}`;
+                document.getElementById("formattedInfo").innerText = formattedInfo;
+            } else {
+                alert("Invalid input. Please provide all required information.");
+            }
+        }
+
+        function clearForm() {
+            document.getElementById("driverForm").reset();
+            document.getElementById("formattedInfo").innerText = "";
+        }
+
+        function copyToClipboard() {
+            const formattedInfo = document.getElementById("formattedInfo").innerText;
+            navigator.clipboard.writeText(formattedInfo).then(function() {
+                alert("Formatted info copied to clipboard!");
+            }).catch(function() {
+                alert("Unable to copy to clipboard. Please copy it manually.");
+            });
+        }
+    </script>
+
+</body>
+</html>
